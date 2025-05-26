@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RummyLoot - Premium Online Rummy Experience</title>
+    <style>
+        :root {
+            --primary: #ff5722;
+            --secondary: #ff9800;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #e94560;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('rummy-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.85);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--dark), var(--primary));
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        /* Auth Forms */
+        .auth-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .auth-form {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .auth-form h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus {
+            outline: 2px solid var(--primary);
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .form-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .form-switch {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .form-switch a {
+            color: var(--secondary);
+            cursor: pointer;
+        }
+        
+        /* Promo Section */
+        .promo-section {
+            padding: 3rem 1rem;
+            background: rgba(26, 26, 46, 0.8);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .promo-card {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        
+        .promo-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .promo-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .promo-content {
+            padding: 1.5rem;
+        }
+        
+        .promo-content h3 {
+            margin-top: 0;
+            color: var(--secondary);
+        }
+        
+        footer {
+            background: var(--dark);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            margin: 1rem 0;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="overlay">
+        <header>
+            <div class="logo">Rummy<span>Loot</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">How to Play</a></li>
+                    <li><a href="#">Promotions</a></li>
+                    <li><a href="#">Tournaments</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </nav>
+            <div>
+                <button class="btn-outline" id="loginBtn" style="margin-right: 10px;">Login</button>
+                <button class="btn" id="registerBtn">Register</button>
+            </div>
+        </header>
+        
+        <!-- Login Form -->
+        <div class="auth-container" id="loginContainer">
+            <div class="auth-form">
+                <button class="close-btn" id="closeLogin">&times;</button>
+                <h2>Login to RummyLoot</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginUsername">Username</label>
+                        <input type="text" id="loginUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Login</button>
+                    <div class="form-footer">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </form>
+                <div class="form-switch">
+                    Don't have an account? <a id="switchToRegister">Register</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Registration Form -->
+        <div class="auth-container" id="registerContainer">
+            <div class="auth-form">
+                <button class="close-btn" id="closeRegister">&times;</button>
+                <h2>Create Account</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="regUsername">Username</label>
+                        <input type="text" id="regUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email</label>
+                        <input type="email" id="regEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPhone">Phone Number</label>
+                        <input type="tel" id="regPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Confirm Password</label>
+                        <input type="password" id="regConfirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regReferral">Referral Code (Optional)</label>
+                        <input type="text" id="regReferral">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Register Now</button>
+                </form>
+                <div class="form-switch">
+                    Already have an account? <a id="switchToLogin">Login</a>
+                </div>
+            </div>
+        </div>
+        
+        <section class="hero">
+            <h1>Play Rummy & Win Big!</h1>
+            <p>Join India's most exciting rummy platform with daily bonuses, tournaments, and massive rewards. Register now and get 100₹ free bonus!</p>
+            <button class="btn" id="heroRegisterBtn">Register Now</button>
+        </section>
+        
+        <section class="promo-section">
+            <h2 class="section-title">Hot Promotions</h2>
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <div class="promo-img" style="background-image: url('non-stop-bonus.jpg');"></div>
+                    <div class="promo-content">
+                        <h3>Non-Stop Bonus</h3>
+                        <p>Recharge 500₹+ for 7 days and get accumulated bonus up to 800₹ weekly. Contact our 24/7 customer service to apply.</p>
+                    </div>
+                </div>
+                
+                <div class="promo-card">
+                    <div class="promo-img" style="background-image: url('daily-rewards.jpg');"></div>
+                    <div class="promo-content">
+                        <h3>Daily Rewards</h3>
+                        <p>Get up to 6% bonus on your total deposit every day. Higher deposits get higher percentage bonuses.</p>
+                    </div>
+                </div>
+                
+                <div class="promo-card">
+                    <div class="promo-img" style="background-image: url('welcome-bonus.jpg');"></div>
+                    <div class="promo-content">
+                        <h3>Welcome Bonus</h3>
+                        <p>New members get 100₹ bonus on first recharge. Contact our online customer service to apply for your bonus.</p>
+                    </div>
+                </div>
+                
+                <div class="promo-card">
+                    <div class="promo-img" style="background-image: url('time-limited.jpg');"></div>
+                    <div class="promo-content">
+                        <h3>Time Limited Offer</h3>
+                        <p>Recharge between 1PM-5PM and get massive bonuses up to 30,000₹. Wager requirement only 3x.</p>
+                    </div>
+                </div>
+                
+                <div class="promo-card">
+                    <div class="promo-img" style="background-image: url('daily-first-recharge.jpg');"></div>
+                    <div class="promo-content">
+                        <h3>Daily First Recharge</h3>
+                        <p>Get 10% bonus on your first recharge each day. Contact 24/7 customer service to claim.</p>
+                    </div>
+                </div>
+                
+                <div class="promo-card">
+                    <div class="promo-img" style="background-image: url('invite-bonus.jpg');"></div>
+                    <div class="promo-content">
+                        <h3>Invite Bonus</h3>
+                        <p>Invite friends and earn up to 100₹ per referral. Top inviters can win iPhone 15 Pro Max!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="promo-section" style="background: rgba(233, 69, 96, 0.1);">
+            <h2 class="section-title">Lucky Wheel</h2>
+            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <img src="lucky-wheel.jpg" alt="Lucky Wheel" style="max-width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <p style="margin-top: 1rem; font-size: 1.2rem;">Spin the wheel daily to win up to 888₹+ in bonus loot!</p>
+                <button class="btn" style="margin-top: 1rem;">Spin Now</button>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="logo" style="margin-bottom: 1rem;">Rummy<span>Loot</span></div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p>© 2023 RummyLoot. All rights reserved.</p>
+            <p style="font-size: 0.8rem; opacity: 0.7;">18+ only. Play responsibly.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Form Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const heroRegisterBtn = document.getElementById('heroRegisterBtn');
+            const loginContainer = document.getElementById('loginContainer');
+            const registerContainer = document.getElementById('registerContainer');
+            const closeLogin = document.getElementById('closeLogin');
+            const closeRegister = document.getElementById('closeRegister');
+            const switchToRegister = document.getElementById('switchToRegister');
+            const switchToLogin = document.getElementById('switchToLogin');
+            
+            // Show login form
+            loginBtn.addEventListener('click', function() {
+                loginContainer.style.display = 'flex';
+            });
+            
+            // Show register form
+            registerBtn.addEventListener('click', function() {
+                registerContainer.style.display = 'flex';
+            });
+            
+            // Hero register button
+            heroRegisterBtn.addEventListener('click', function() {
+                registerContainer.style.display = 'flex';
+            });
+            
+            // Close buttons
+            closeLogin.addEventListener('click', function() {
+                loginContainer.style.display = 'none';
+            });
+            
+            closeRegister.addEventListener('click', function() {
+                registerContainer.style.display = 'none';
+            });
+            
+            // Switch between forms
+            switchToRegister.addEventListener('click', function() {
+                loginContainer.style.display = 'none';
+                registerContainer.style.display = 'flex';
+            });
+            
+            switchToLogin.addEventListener('click', function() {
+                registerContainer.style.display = 'none';
+                loginContainer.style.display = 'flex';
+            });
+            
+            // Close when clicking outside form
+            window.addEventListener('click', function(event) {
+                if (event.target === loginContainer) {
+                    loginContainer.style.display = 'none';
+                }
+                if (event.target === registerContainer) {
+                    registerContainer.style.display = 'none';
+                }
+            });
+            
+            // Form submission
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Add your login logic here
+                alert('Login functionality would be implemented here');
+                loginContainer.style.display = 'none';
+            });
+            
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Add your registration logic here
+                alert('Registration functionality would be implemented here');
+                registerContainer.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
